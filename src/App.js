@@ -1,26 +1,35 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Component} from 'react';
 import './App.css';
+import Navbar from './Components/Navbar';
+import Footer from './Components/Footer';
+import PageContent from './Components/PageContent';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+class App extends Component {
+  constructor(props){
+    super(props);
+    //this.props.graphDimension = {};
+    this.state = {};
+  }
+
+  componentDidMount(){
+    let graphContainer = document.getElementsByClassName('graph');
+    let graphWidth = graphContainer.clientWidth;
+    let graphHeight = graphContainer.clientHeight;
+    this.setState({
+      width: graphWidth,
+      height: graphHeight
+    })
+  }
+
+  render() {
+    return (
+      <div className="App">
+        <Navbar/>
+        <PageContent graphDimension={this.state}/>
+        <Footer/>
+      </div>
+    );
+  }
+} 
 
 export default App;

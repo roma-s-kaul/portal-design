@@ -1,0 +1,205 @@
+{
+  "errors": [], 
+  "results": [
+    {
+      "columns": [
+        "f"
+      ], 
+      "data": [
+        {
+          "graph": {
+            "nodes": [
+              {
+                "id": 1, 
+                "labels": "Undefined", 
+                "properties": {
+                  "url": "Your Plan"
+                }
+              }, 
+              {
+                "id": 2, 
+                "labels": "Banks", 
+                "properties": {
+                  "Company_Name": "FINANCIAL CONSULTING INC", 
+                  "NAICS_code": 523930, 
+                  "sector": "Banks", 
+                  "url": "www.loanzoneok.com"
+                }
+              }, 
+              {
+                "id": 3, 
+                "labels": "Undefined", 
+                "properties": {
+                  "url": "www.firstcommercialbk.com"
+                }
+              }, 
+              {
+                "id": 4, 
+                "labels": "Undefined", 
+                "properties": {
+                  "url": "www.solarcapltd.com"
+                }
+              }, 
+              {
+                "id": 5, 
+                "labels": "Banks", 
+                "properties": {
+                  "Company_Name": "JAMES RIVER MUTUAL INSURANCE CO INC", 
+                  "NAICS_code": 524114, 
+                  "sector": "Banks", 
+                  "url": "www.jamesriverinsurance.com"
+                }
+              }, 
+              {
+                "id": 6, 
+                "labels": "Undefined", 
+                "properties": {
+                  "url": "www.rfmw.com"
+                }
+              }, 
+              {
+                "id": 7, 
+                "labels": "Undefined", 
+                "properties": {
+                  "url": "www.jvrestaurant.com"
+                }
+              }, 
+              {
+                "id": 8, 
+                "labels": "Banks", 
+                "properties": {
+                  "Company_Name": "First Community Bank", 
+                  "NAICS_code": 522110, 
+                  "sector": "Banks", 
+                  "url": "www.fcb-al.com"
+                }
+              }, 
+              {
+                "id": 9, 
+                "labels": "Banks", 
+                "properties": {
+                  "Company_Name": "Scituate Federal Savings Bank", 
+                  "NAICS_code": 522120, 
+                  "sector": "Banks", 
+                  "url": "www.scituatefederal.com"
+                }
+              }, 
+              {
+                "id": 10, 
+                "labels": "Banks", 
+                "properties": {
+                  "Company_Name": "PAULSON INVESTMENT CO INC", 
+                  "NAICS_code": 523910, 
+                  "sector": "Banks", 
+                  "url": "www.paulsoninvestment.com"
+                }
+              }, 
+              {
+                "id": 11, 
+                "labels": "Other", 
+                "properties": {
+                  "Company_Name": "MARINER ANALYTICAL LLC", 
+                  "NAICS_code": 541611, 
+                  "sector": "Other", 
+                  "url": "www.marineranalytical.com"
+                }
+              }
+            ], 
+            "relationships": [
+              {
+                "endNode": 2, 
+                "id": 12, 
+                "properties": {
+                  "score": 0.307
+                }, 
+                "startNode": 1, 
+                "type": "Similar To"
+              }, 
+              {
+                "endNode": 3, 
+                "id": 13, 
+                "properties": {
+                  "score": 0.299
+                }, 
+                "startNode": 1, 
+                "type": "Similar To"
+              }, 
+              {
+                "endNode": 4, 
+                "id": 14, 
+                "properties": {
+                  "score": 0.298
+                }, 
+                "startNode": 1, 
+                "type": "Similar To"
+              }, 
+              {
+                "endNode": 5, 
+                "id": 15, 
+                "properties": {
+                  "score": 0.294
+                }, 
+                "startNode": 1, 
+                "type": "Similar To"
+              }, 
+              {
+                "endNode": 6, 
+                "id": 16, 
+                "properties": {
+                  "score": 0.288
+                }, 
+                "startNode": 1, 
+                "type": "Similar To"
+              }, 
+              {
+                "endNode": 7, 
+                "id": 17, 
+                "properties": {
+                  "score": 0.283
+                }, 
+                "startNode": 1, 
+                "type": "Similar To"
+              }, 
+              {
+                "endNode": 8, 
+                "id": 18, 
+                "properties": {
+                  "score": 0.28
+                }, 
+                "startNode": 1, 
+                "type": "Similar To"
+              }, 
+              {
+                "endNode": 9, 
+                "id": 19, 
+                "properties": {
+                  "score": 0.28
+                }, 
+                "startNode": 1, 
+                "type": "Similar To"
+              }, 
+              {
+                "endNode": 10, 
+                "id": 20, 
+                "properties": {
+                  "score": 0.278
+                }, 
+                "startNode": 1, 
+                "type": "Similar To"
+              }, 
+              {
+                "endNode": 11, 
+                "id": 21, 
+                "properties": {
+                  "score": 0.276
+                }, 
+                "startNode": 1, 
+                "type": "Similar To"
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}
