@@ -4,13 +4,7 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { makeStyles } from '@material-ui/core/styles';
 import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
-
-
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableRow from '@material-ui/core/TableRow';
+import IconButton from '@material-ui/core/IconButton';
 import GraphComponent from './GraphComponent';
 
 const response = require('./response.json');
@@ -19,7 +13,7 @@ const LandingComponent = ({textState, boolState, setTextState, setBoolState, onT
     return(
         <div>
             <div className='tester'>
-                <p>What is your starting point?</p>
+                <h3>What is your starting point?</h3>
             </div>
             <div className="container">
                 <div className="row">
@@ -51,48 +45,24 @@ const LandingComponent = ({textState, boolState, setTextState, setBoolState, onT
     );
 }
 
-/*const StickyHeadTable = (node) => {
-    const classes = useStyles();
-
-    const {nodeId} = node;
-    let nodeData = response.results[0].data[0].graph.nodes.find(node => node.id == nodeId)
-    const {id, labels, properties} = nodeData;
-  
-    return (
-      <Paper className={classes.root}>
-        <TableContainer className={classes.container}>
-        <Table stickyHeader aria-label="sticky table">
-            <TableBody>
-                {Object.keys(properties).map((row) => {
-                    const value = properties[row];
-                    return(
-                        <TableRow hover role="checkbox" tabIndex={-1}>
-                            <TableCell>
-                                {row}
-                            </TableCell>
-                            <TableCell>
-                                {value}
-                            </TableCell>
-                        </TableRow>
-                    );
-                })}
-            </TableBody>
-        </Table>
-        </TableContainer>
-      </Paper>
-                  
-    );
-            
-}*/
-
 const ResultComponent = ({onToggle}) => {
     const classes = useStyles(); 
     return(
         <div>
             <div className='tester'>
-                <p>Market Intelligence Results</p>
+                <h3>Market Intelligence Results</h3>
+                <div>
+                <ButtonGroup size="small" aria-label="large outlined primary button group">
+                    <Button>Graph</Button>
+                    <Button>Setting</Button>
+                    <Button>Legend</Button>
+                    <Button>Export</Button>
+                </ButtonGroup>
+                </div>
             </div>
-            <button className={classes.edit} onClick={onToggle}><EditTwoToneIcon fontSize="small" color="black"/></button>
+            <div className = {classes.edit}>
+            <IconButton aria-label="edit" onClick={onToggle}><EditTwoToneIcon fontSize="small" color="black"/></IconButton>
+            </div>
             <div className={classes.root}>
                 <ButtonGroup size="small" aria-label="large outlined primary button group">
                     <Button>Competitors</Button>
@@ -116,39 +86,13 @@ const useStyles = makeStyles((theme) => ({
       marginTop: "2%",
     },
     edit: {
-        position: "absolute",
-        color: 'blue',
-        marginLeft: "2%",
-        backgroundColor: "white"
+        position: "absolute"
     },
     resultContainer: {
-        height: "calc(100% - 315px)",
-        marginTop: "10px",
-        width: "100%",
-        position: "absolute",
-        border: "1px solid black"
+        height: "calc(100%)",
+        marginTop: "1.25rem",
+        width: "100%"
     },
-    attributes: {
-        position: "relative",
-        width: "calc(40% - 1px)",
-        height: "100%",
-        float: "left",
-        borderRight: "1px solid black",
-        overflow: "auto"
-    },
-    graph: {
-        position: "relative",
-        width: "60%",
-        height: "100%",
-        float: "left",
-    },
-    additionalInfo: {
-        position: "relative",
-        width: "calc(0% - 1px)",
-        height: "100%",
-        float: "left",
-        borderLeft: "1px solid black"
-    }
 }));
 
 const PageContent = ({graphDimension}) => {
@@ -157,15 +101,8 @@ const PageContent = ({graphDimension}) => {
     const [boolState, setBoolState] = useState('option1');
     const classes = useStyles();
     return (
-        <div>
-            <div className={classes.root}>
-                <ButtonGroup size="small" aria-label="large outlined primary button group">
-                    <Button>Graph</Button>
-                    <Button>Setting</Button>
-                    <Button>Legend</Button>
-                    <Button>Export</Button>
-                </ButtonGroup>
-            </div>
+        <div className="parent">
+            
             <div className="page-container">
                 { 
                     showResultState ? 

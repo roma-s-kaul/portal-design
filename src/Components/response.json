@@ -18,90 +18,99 @@
               }, 
               {
                 "id": 2, 
-                "labels": "Banks", 
+                "labels": "Other", 
                 "properties": {
-                  "Company_Name": "FINANCIAL CONSULTING INC", 
-                  "NAICS_code": 523930, 
-                  "sector": "Banks", 
-                  "url": "www.loanzoneok.com"
+                  "Company_Name": "FEDAIR LLC", 
+                  "NAICS_code": 532310, 
+                  "sector": "Other", 
+                  "url": "www.fedaircharter.com"
                 }
               }, 
               {
                 "id": 3, 
-                "labels": "Undefined", 
+                "labels": "Other", 
                 "properties": {
-                  "url": "www.firstcommercialbk.com"
+                  "Company_Name": "FLYNN WATSON ARCHITECTS LLC", 
+                  "NAICS_code": 541310, 
+                  "sector": "Other", 
+                  "url": "www.fwarchitects.com"
                 }
               }, 
               {
                 "id": 4, 
-                "labels": "Undefined", 
+                "labels": "Other", 
                 "properties": {
-                  "url": "www.solarcapltd.com"
+                  "Company_Name": "KEENAN DESIGN INC", 
+                  "NAICS_code": 561439, 
+                  "sector": "Other", 
+                  "url": "www.keenandesign.com"
                 }
               }, 
               {
                 "id": 5, 
-                "labels": "Banks", 
+                "labels": "Transportation", 
                 "properties": {
-                  "Company_Name": "JAMES RIVER MUTUAL INSURANCE CO INC", 
-                  "NAICS_code": 524114, 
-                  "sector": "Banks", 
-                  "url": "www.jamesriverinsurance.com"
+                  "Company_Name": "TBSK INC", 
+                  "NAICS_code": 488510, 
+                  "sector": "Transportation", 
+                  "url": "www.snsprecision.com"
                 }
               }, 
               {
                 "id": 6, 
-                "labels": "Undefined", 
+                "labels": "Other", 
                 "properties": {
-                  "url": "www.rfmw.com"
+                  "Company_Name": "HALLMARK PERSONNEL INC", 
+                  "NAICS_code": 561311, 
+                  "sector": "Other", 
+                  "url": "www.hallmarkpersonnel.com"
                 }
               }, 
               {
                 "id": 7, 
                 "labels": "Undefined", 
                 "properties": {
-                  "url": "www.jvrestaurant.com"
+                  "url": "www.sinotrans-csc.com"
                 }
               }, 
               {
                 "id": 8, 
-                "labels": "Banks", 
+                "labels": "Other", 
                 "properties": {
-                  "Company_Name": "First Community Bank", 
-                  "NAICS_code": 522110, 
-                  "sector": "Banks", 
-                  "url": "www.fcb-al.com"
+                  "Company_Name": "AMPLE OPPORTUNITY INC", 
+                  "NAICS_code": 561439, 
+                  "sector": "Other", 
+                  "url": "www.ample-opportunity.com"
                 }
               }, 
               {
                 "id": 9, 
-                "labels": "Banks", 
+                "labels": "Other", 
                 "properties": {
-                  "Company_Name": "Scituate Federal Savings Bank", 
-                  "NAICS_code": 522120, 
-                  "sector": "Banks", 
-                  "url": "www.scituatefederal.com"
+                  "Company_Name": "MOTIVATE INC", 
+                  "NAICS_code": 541840, 
+                  "sector": "Other", 
+                  "url": "www.motivateroi.com"
                 }
               }, 
               {
                 "id": 10, 
-                "labels": "Banks", 
+                "labels": "Other", 
                 "properties": {
-                  "Company_Name": "PAULSON INVESTMENT CO INC", 
-                  "NAICS_code": 523910, 
-                  "sector": "Banks", 
-                  "url": "www.paulsoninvestment.com"
+                  "Company_Name": "MIDWEST SNOW TECHNICIANS INC", 
+                  "NAICS_code": 562998, 
+                  "sector": "Other", 
+                  "url": "www.midwestsnowtech.com"
                 }
               }, 
               {
                 "id": 11, 
-                "labels": "Other", 
+                "labels": "Textiles", 
                 "properties": {
-                  "Company_Name": "MARINER ANALYTICAL LLC", 
-                  "NAICS_code": 541611, 
-                  "sector": "Other", 
-                  "url": "www.marineranalytical.com"
+                  "Company_Name": "10-TEX INC", 
+                  "NAICS_code": 315220, 
+                  "sector": "Textiles", 
+                  "url": "www.kennyhwang.com"
                 }
               }
             ], 
@@ -110,7 +119,7 @@
                 "endNode": 2, 
                 "id": 12, 
                 "properties": {
-                  "score": 0.307
+                  "score": 0.43
                 }, 
                 "startNode": 1, 
                 "type": "Similar To"
@@ -119,7 +128,7 @@
                 "endNode": 3, 
                 "id": 13, 
                 "properties": {
-                  "score": 0.299
+                  "score": 0.42
                 }, 
                 "startNode": 1, 
                 "type": "Similar To"
@@ -128,7 +137,7 @@
                 "endNode": 4, 
                 "id": 14, 
                 "properties": {
-                  "score": 0.298
+                  "score": 0.418
                 }, 
                 "startNode": 1, 
                 "type": "Similar To"
@@ -137,7 +146,7 @@
                 "endNode": 5, 
                 "id": 15, 
                 "properties": {
-                  "score": 0.294
+                  "score": 0.407
                 }, 
                 "startNode": 1, 
                 "type": "Similar To"
@@ -146,7 +155,7 @@
                 "endNode": 6, 
                 "id": 16, 
                 "properties": {
-                  "score": 0.288
+                  "score": 0.401
                 }, 
                 "startNode": 1, 
                 "type": "Similar To"
@@ -155,7 +164,7 @@
                 "endNode": 7, 
                 "id": 17, 
                 "properties": {
-                  "score": 0.283
+                  "score": 0.386
                 }, 
                 "startNode": 1, 
                 "type": "Similar To"
@@ -164,7 +173,7 @@
                 "endNode": 8, 
                 "id": 18, 
                 "properties": {
-                  "score": 0.28
+                  "score": 0.372
                 }, 
                 "startNode": 1, 
                 "type": "Similar To"
@@ -173,7 +182,7 @@
                 "endNode": 9, 
                 "id": 19, 
                 "properties": {
-                  "score": 0.28
+                  "score": 0.35
                 }, 
                 "startNode": 1, 
                 "type": "Similar To"
@@ -182,7 +191,7 @@
                 "endNode": 10, 
                 "id": 20, 
                 "properties": {
-                  "score": 0.278
+                  "score": 0.349
                 }, 
                 "startNode": 1, 
                 "type": "Similar To"
@@ -191,7 +200,7 @@
                 "endNode": 11, 
                 "id": 21, 
                 "properties": {
-                  "score": 0.276
+                  "score": 0.349
                 }, 
                 "startNode": 1, 
                 "type": "Similar To"

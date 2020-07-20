@@ -2,16 +2,14 @@
 import React, {Component} from 'react'
 import { Graph } from 'react-d3-graph';
 import TableComponent from './TableComponent';
-import { makeStyles } from '@material-ui/core/styles';
 
 const response = require('./response.json');
 const temp = {
     root: {
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-        color: "black",
-        marginTop: "2%",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "stretch",
+        height: "500px"
       },
       edit: {
           position: "absolute",
@@ -19,33 +17,24 @@ const temp = {
           marginLeft: "2%",
           backgroundColor: "white"
       },
-      resultContainer: {
-          height: "calc(100% - 315px)",
-          marginTop: "10px",
-          width: "100%",
-          position: "absolute",
-          border: "1px solid black"
-      },
-      attributes: {
-          position: "relative",
-          width: "calc(40% - 1px)",
-          height: "100%",
-          float: "left",
-          borderRight: "1px solid black",
-          overflow: "auto"
-      },
       graph: {
-          position: "relative",
-          width: "60%",
-          height: "100%",
-          float: "left",
+            width: "70%",
+            boxShadow: "4px -4px 8px 0 rgba(0,0,0,0.5)",
+            transition: "0.3s",
+            color: "white",
+            backgroundColor: "rgb(49 47 47)",
+            marginRight: "5px",
+            borderRadius: "5px"
       },
       additionalInfo: {
-          position: "relative",
-          width: "calc(0% - 1px)",
-          height: "100%",
-          float: "left",
-          borderLeft: "1px solid black"
+        width: "30%",
+        boxShadow: "4px -4px 8px 0 rgba(0,0,0,0.5)",
+        transition: "0.3s",
+        color: "white",
+        backgroundColor: "rgb(49 47 47)",
+        marginLeft: "5px",
+        borderRadius: "5px",
+        overflowY: "scroll"
       }
 }
 class GraphComponent extends Component {
@@ -65,19 +54,21 @@ class GraphComponent extends Component {
                 height: 400,
                 width: 600,
                 disableLinkForce: true,
+                directed: true,
                 node: {
-                    color: "pink",
+                    color: "wheat",
                     size: 2000,
-                    fontSize: 18,
+                    fontSize: 14,
                     labelPosition: "center",
-                    highlightStrokeColor: "blue"
+                    //highlightStrokeColor: "white"
                 },
                 link: {
                     highlightColor: "lightblue",
-                    color: 'black',
+                    color: 'white',
                     renderLabel: true,
+                    fontSize: 14,
                     semanticStrokeWidth: true,
-
+                    fontColor: 'wheat'
                     //strokeWidth: 300
                 },
                 d3: {
@@ -93,8 +84,8 @@ class GraphComponent extends Component {
 
     componentDidMount() {
         var myConfig = {...this.state.myConfig};
-        myConfig.width = this.graphRef.current.parentElement.clientWidth;
-        myConfig.height = this.graphRef.current.parentElement.clientHeight;
+        myConfig.width = this.graphRef.current.clientWidth;
+        myConfig.height = this.graphRef.current.clientHeight;
 
         this.setState({myConfig});
         
@@ -125,22 +116,18 @@ class GraphComponent extends Component {
         //const classes = useStyles(); 
         const graphData = this.transformData();
         let config = this.state.myConfig;
-        const classes = temp;
         return (
-            <div>
-                <div className = {classes.graph}>
-                    <div ref={this.graphRef}>
-                        <Graph id="graph-id" 
-                            data={graphData} 
-                            config={config} 
-                            onClickNode={(nodeId) => this.onClickNode(nodeId)}
-                        />
-                    </div>
-                    <div className = {classes.additionalInfo} >
-                        <TableComponent nodeId={this.state.nodeId}/>
-                    </div>
+            <div style={temp.root}>
+                <div style={temp.graph} ref={this.graphRef}>
+                    <Graph id="graph-id" 
+                        data={graphData} 
+                        config={config} 
+                        onClickNode={(nodeId) => this.onClickNode(nodeId)}
+                    />
                 </div>
-                
+                <div style={temp.additionalInfo} >
+                    <TableComponent nodeId={this.state.nodeId}/>
+                </div>
             </div>
         
         )}

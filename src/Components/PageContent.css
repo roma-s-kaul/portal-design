@@ -1,18 +1,19 @@
 .tester {
-    margin-top: 2%;
-    color: black;
-    text-align: center;
-    background-color: #2196f3;
-    line-height: 300%;
+    text-align: left;
     font-weight: bold;
     font-size: larger;
-    color: whitesmoke;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.parent {
+    margin: 0 1rem;
 }
 
 .button {
     display: inline-block;
     border-radius: 4px;
-    background-color: #2196f3;
+    background-color: #312f2f;
     border: none;
     color: #FFFFFF;
     text-align: center;
