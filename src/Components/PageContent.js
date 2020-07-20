@@ -4,7 +4,8 @@ import Button from '@material-ui/core/Button';
 import ButtonGroup from '@material-ui/core/ButtonGroup';
 import { makeStyles } from '@material-ui/core/styles';
 import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
-import Paper from '@material-ui/core/Paper';
+
+
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
@@ -50,7 +51,7 @@ const LandingComponent = ({textState, boolState, setTextState, setBoolState, onT
     );
 }
 
-const StickyHeadTable = (node) => {
+/*const StickyHeadTable = (node) => {
     const classes = useStyles();
 
     const {nodeId} = node;
@@ -82,11 +83,10 @@ const StickyHeadTable = (node) => {
                   
     );
             
-}
+}*/
 
 const ResultComponent = ({onToggle}) => {
     const classes = useStyles(); 
-    const [nodeId, setNodeId] = useState(2);
     return(
         <div>
             <div className='tester'>
@@ -101,12 +101,7 @@ const ResultComponent = ({onToggle}) => {
                 </ButtonGroup>
             </div>
             <div className = {classes.resultContainer}>
-                <div id = "nodeTable" className = {classes.attributes}>
-                    <StickyHeadTable nodeId={nodeId}/>
-                </div>
-                <div className = {classes.graph}>
-                    <GraphComponent />
-                </div>
+                <GraphComponent />
             </div>
         </div>
     );

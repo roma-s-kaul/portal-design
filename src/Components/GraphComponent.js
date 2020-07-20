@@ -1,21 +1,53 @@
 /*jshint esversion: 9 */
 import React, {Component} from 'react'
-import './PageContent.css'
-import Button from '@material-ui/core/Button';
-import ButtonGroup from '@material-ui/core/ButtonGroup';
-import { makeStyles } from '@material-ui/core/styles';
-import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
-import Paper from '@material-ui/core/Paper';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TablePagination from '@material-ui/core/TablePagination';
-import TableRow from '@material-ui/core/TableRow';
 import { Graph } from 'react-d3-graph';
+import TableComponent from './TableComponent';
+import { makeStyles } from '@material-ui/core/styles';
 
 const response = require('./response.json');
-
+const temp = {
+    root: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        color: "black",
+        marginTop: "2%",
+      },
+      edit: {
+          position: "absolute",
+          color: 'blue',
+          marginLeft: "2%",
+          backgroundColor: "white"
+      },
+      resultContainer: {
+          height: "calc(100% - 315px)",
+          marginTop: "10px",
+          width: "100%",
+          position: "absolute",
+          border: "1px solid black"
+      },
+      attributes: {
+          position: "relative",
+          width: "calc(40% - 1px)",
+          height: "100%",
+          float: "left",
+          borderRight: "1px solid black",
+          overflow: "auto"
+      },
+      graph: {
+          position: "relative",
+          width: "60%",
+          height: "100%",
+          float: "left",
+      },
+      additionalInfo: {
+          position: "relative",
+          width: "calc(0% - 1px)",
+          height: "100%",
+          float: "left",
+          borderLeft: "1px solid black"
+      }
+}
 class GraphComponent extends Component {
     constructor(props) {
         super(props);
@@ -33,7 +65,6 @@ class GraphComponent extends Component {
                 height: 400,
                 width: 600,
                 disableLinkForce: true,
-                directed: true,
                 node: {
                     color: "pink",
                     size: 2000,
@@ -69,6 +100,7 @@ class GraphComponent extends Component {
         
     }
     
+    
     transformData() {
         var linksObj = [];
         response.results[0].data[0].graph.relationships.forEach( function (rel) {
@@ -93,16 +125,23 @@ class GraphComponent extends Component {
         //const classes = useStyles(); 
         const graphData = this.transformData();
         let config = this.state.myConfig;
+        const classes = temp;
         return (
-            <div ref={this.graphRef}>
-                <Graph id="graph-id" 
-                data={graphData} 
-                config={config} 
-                onClickNode={(nodeId) => this.onClickNode(nodeId)}
+            <div>
+                <div className = {classes.graph}>
+                    <div ref={this.graphRef}>
+                        <Graph id="graph-id" 
+                            data={graphData} 
+                            config={config} 
+                            onClickNode={(nodeId) => this.onClickNode(nodeId)}
+                        />
+                    </div>
+                    <div className = {classes.additionalInfo} >
+                        <TableComponent nodeId={this.state.nodeId}/>
+                    </div>
+                </div>
                 
-                />
             </div>
-        
         
         )}
 
