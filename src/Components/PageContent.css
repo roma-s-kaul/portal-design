@@ -66,3 +66,7 @@ textarea {
   height: 10vw;
 }
 
+.MuiButton-label {
+  text-transform: capitalize;
+}
+
