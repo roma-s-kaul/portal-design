@@ -40,6 +40,13 @@ const tableStyles = (theme) => ({
         fontStyle: "italic",
         width: "67%",
         overflow: "auto"
+    },
+    accord: {
+        boxShadow: "0px 4px 8px 0px rgb(255 255 255 / 20%), 0px 4px 8px 0px rgb(255 255 255 / 14%), 0px 4px 8px 0px rgb(255 255 255 / 12%)",
+    backgroundColor: "#312f2f",
+    color: "white",
+    margin: "16px 0",
+    borderRadius: "10px"
     }
 });
 
@@ -55,18 +62,20 @@ class TableComponent extends React.Component {
         this.state.expanded ? this.setState({ expanded: false }) : this.setState({ expanded: panel });
     };
 
-    createData(graph) {
-        let nodeData = graph.nodes.find(node => node.id == this.props.nodeId);
-        let nodeObj = {}
+    createData(response) {
+        const nodeData = response.result.find(function(x) {
+            return x.url == this.props.nodeId;
+        }.bind(this));
+        var nodeObj = {}
         nodeObj['id'] = nodeData.id;
-        nodeObj['labels'] = nodeData.labels;
-        nodeObj['Company Name'] = nodeData.properties.Company_Name || '-';
-        nodeObj['NAICS Code'] = nodeData.properties.NAICS_code || '-';
-        nodeObj['Sector'] = nodeData.properties.sector || '-';
-        nodeObj['URL'] = nodeData.properties.url || '-';
-        let relationshipData = graph.relationships.find(node => node.endNode == this.props.nodeId);
-        nodeObj['type'] = relationshipData.type;
-        nodeObj['score'] = relationshipData.properties.score;
+        //nodeObj['labels'] = nodeData.labels;
+        nodeObj['companyName'] = nodeData.companyName || '-';
+        nodeObj['naicsCode'] = nodeData.naicsCode || '-';
+        nodeObj['sector'] = nodeData.sector || '-';
+        nodeObj['url'] = nodeData.url || '-';
+        //let relationshipData = graph.relationships.find(node => node.properties.url == this.props.nodeId);
+        //nodeObj['type'] = relationshipData.type;
+        //nodeObj['score'] = relationshipData.properties.score;
         return nodeObj;
     }
 
@@ -76,21 +85,22 @@ class TableComponent extends React.Component {
         addObj['Retrieve'] =
         addObj['']
     }*/
-    componentDidMount() {
+    /*componentDidMount() {
         fetch('https://randomuser.me/api/1.1/?results=15')
             .then(response => response.json())
             .then(data => { this.setState({ users: data.results }) });
-    }
+    }*/
 
     render() {
         //const { users } = this.state;
-        const displayData = this.createData(response.results[0].data[0].graph);
+        const displayData = this.createData(response);
         //const additionalData = this.createAdditionalData(additionalResponse.opencorporates)
         const classes = tableStyles();
         return (
             <div style={classes.root}>
-                <h4> Company Information </h4>
-                <Accordion expanded={this.state.expanded === 'panel1'} value='panel1' onChange={(e) => this.handleChange("panel1", e)}>
+                <h4> Id selected: {this.props.nodeId}</h4>
+
+                <Accordion style={classes.accord} expanded={this.state.expanded === 'panel1'} value='panel1' onChange={(e) => this.handleChange("panel1", e)}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1bh-content" id="panel1bh-header" >
                         <Typography className={classes.heading}>Basic Information</Typography>
                     </AccordionSummary>
@@ -99,15 +109,15 @@ class TableComponent extends React.Component {
                         <table style={classes.table}>
                             <tr>
                                 <td style = {classes.rowKey}>Company Name</td>
-                                <td style = {classes.rowValue} align="right">{displayData['Company Name']}</td>
+                                <td style = {classes.rowValue} align="right">{displayData['companyName']}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>URL</td>
-                                <td style = {classes.rowValue} align="right">{displayData['URL']}</td>
+                                <td style = {classes.rowValue} align="right">{displayData['id']}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>Sector</td>
-                                <td style = {classes.rowValue} align="right">{displayData['Sector']}</td>
+                                <td style = {classes.rowValue} align="right">{displayData['sector']}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>Label</td>
@@ -119,13 +129,13 @@ class TableComponent extends React.Component {
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>NAICS Code</td>
-                                <td style = {classes.rowValue} align="right">{displayData['NAICS Code']}</td>
+                                <td style = {classes.rowValue} align="right">{displayData['naicsCode']}</td>
                             </tr>
                         </table>
 
                     </AccordionDetails>
                 </Accordion>
-                <Accordion expanded={this.state.expanded === 'panel2'} value='panel2' onChange={(e) => this.handleChange("panel2", e)}>
+                <Accordion style={classes.accord} expanded={this.state.expanded === 'panel2'} value='panel2' onChange={(e) => this.handleChange("panel2", e)}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel2bh-content" id="panel2bh-header" >
                         <Typography className={classes.heading}>Additional Information</Typography>
                     </AccordionSummary>
@@ -153,7 +163,11 @@ class TableComponent extends React.Component {
                                 <td style = {classes.rowValue} align="right">{displayData['score']}</td>
                             </tr>
                             <tr>
-                                <td style = {classes.rowKey}>Current Status</td>
+                                <td style = {classes.rowKey}>Company Type</td>
+                                <td style = {classes.rowValue} align="right">{displayData['NAICS Code']}</td>
+                            </tr>
+                            <tr>
+                                <td style = {classes.rowKey}>Agent Address</td>
                                 <td style = {classes.rowValue} align="right">{displayData['NAICS Code']}</td>
                             </tr>
                             <tr>
@@ -161,15 +175,11 @@ class TableComponent extends React.Component {
                                 <td style = {classes.rowValue} align="right">{displayData['NAICS Code']}</td>
                             </tr>
                             <tr>
-                                <td style = {classes.rowKey}>Current Status</td>
+                                <td style = {classes.rowKey}>Company Number</td>
                                 <td style = {classes.rowValue} align="right">{displayData['NAICS Code']}</td>
                             </tr>
                             <tr>
-                                <td style = {classes.rowKey}>Current Status</td>
-                                <td style = {classes.rowValue} align="right">{displayData['NAICS Code']}</td>
-                            </tr>
-                            <tr>
-                                <td style = {classes.rowKey}>Current Status</td>
+                                <td style = {classes.rowKey}>Registry Url</td>
                                 <td style = {classes.rowValue} align="right">{displayData['NAICS Code']}</td>
                             </tr>
                         </table>

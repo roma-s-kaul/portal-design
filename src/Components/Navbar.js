@@ -10,7 +10,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 const useStyles = makeStyles((theme) => ({
   root: {
     flexGrow: 1,
-    backgroundColor: "#000000"
+    backgroundColor: "#373737"
   },
   menuButton: {
     marginRight: theme.spacing(2),
@@ -21,7 +21,8 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: "bold"
   },
   titleBar: {
-    backgroundColor: "#312f2f"
+    backgroundColor: "#312f2f",
+    boxShadow:  "8px 8px 31px #141313, -8px -8px 31px #4e4b4b"
   },
   loginButton: {
     fontWeight: "bold"

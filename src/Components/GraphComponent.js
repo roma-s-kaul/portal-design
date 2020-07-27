@@ -2,14 +2,14 @@
 import React, {Component} from 'react'
 import { Graph } from 'react-d3-graph';
 import TableComponent from './TableComponent';
-
 const response = require('./response.json');
+
 const temp = {
     root: {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "stretch",
-        height: "500px"
+        height: "528px"
       },
       edit: {
           position: "absolute",
@@ -35,14 +35,18 @@ const temp = {
         marginLeft: "5px",
         borderRadius: "5px",
         overflowY: "scroll"
-      }
+      },
+      slider: {
+        width: "300px",
+      },
 }
+
 class GraphComponent extends Component {
     constructor(props) {
         super(props);
         this.graphRef = React.createRef();
         this.state = { 
-            nodeId: 2,
+            nodeId: "My Plan",
             myConfig:  {
                 //staticGraph: true,
                 nodeHighlightBehavior: true,
@@ -54,12 +58,13 @@ class GraphComponent extends Component {
                 height: 400,
                 width: 600,
                 disableLinkForce: true,
-                directed: true,
+                directed: false,
                 node: {
                     color: "wheat",
-                    size: 2000,
+                    size: 200,
                     fontSize: 14,
-                    labelPosition: "center",
+                    labelPosition: "left",
+                    fontColor: "white"
                     //highlightStrokeColor: "white"
                 },
                 link: {
@@ -88,28 +93,66 @@ class GraphComponent extends Component {
         myConfig.height = this.graphRef.current.clientHeight;
 
         this.setState({myConfig});
+        /*force.on('tick', () => {
+            this.forceUpdate()
+            });*/
         
     }
     
+    cosineSimilarity(embedding1, embedding2) {
+        var dotProd = 0;
+        var mA = 0;
+        var mB = 0;
+        for(var i = 0; i < embedding1.length; i++) {
+            dotProd += (embedding1[i] * embedding2[i]);
+            mA += (embedding1[i] * embedding1[i]);
+            mB += (embedding2[i] * embedding2[i]);
+        }
+        mA = Math.sqrt(mA);
+        mB = Math.sqrt(mB);
+        var similarity = dotProd/(mA * mB);
+        return similarity;
+    }
     
     transformData() {
-        var linksObj = [];
-        response.results[0].data[0].graph.relationships.forEach( function (rel) {
+        var nodeObj = [];
+        var linkObj = [];
+        for(var i=0; i < response.result.length; i++) {
             var tempObj = {
-                source: rel.startNode,
-                target: rel.endNode,
-                label: rel.properties.score || null
+                id: response.result[i].url,
+                companyName: response.result[i].Company_Name || null,
+                naicsCode: response.result[i].NAICS_code || null,
+                sector: response.result[i].sector || null
             };
-            linksObj.push(tempObj);
-        });
+            
+            nodeObj.push(tempObj);
+            for(var j=i+1; j< response.result.length; j++) {
+                let simQ = (this.cosineSimilarity(response.result[i].embedding, response.result[j].embedding));
+                console.log(simQ);
+                if(simQ > 0.39) {
+                    var tempObj2 = {
+                        source: response.result[i].url,
+                        target: response.result[j].url,
+                        label: simQ.toFixed(3)
+                    }
+                    linkObj.push(tempObj2);
+                }
+            }
+
+        }
+        
         return {
-                nodes: response.results[0].data[0].graph.nodes,
-                links: linksObj
+                nodes: nodeObj,
+                links: linkObj
         };
     }
     
     onClickNode (id) {
         this.setState({nodeId: id});
+    }
+
+    valuetext(value) {
+        return `${value}`;
     }
     
     render() {
@@ -123,7 +166,7 @@ class GraphComponent extends Component {
                         data={graphData} 
                         config={config} 
                         onClickNode={(nodeId) => this.onClickNode(nodeId)}
-                    />
+                    />                     
                 </div>
                 <div style={temp.additionalInfo} >
                     <TableComponent nodeId={this.state.nodeId}/>
