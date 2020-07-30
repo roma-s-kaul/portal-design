@@ -9,7 +9,9 @@ const temp = {
         display: "flex",
         justifyContent: "space-between",
         alignItems: "stretch",
-        height: "528px"
+        //height: "37rem",
+        height: "calc(100vh - 291px)",
+        overflowY: "scroll"
       },
       edit: {
           position: "absolute",
