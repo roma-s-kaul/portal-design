@@ -10,7 +10,7 @@ import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-const response = require('./response.json');
+//const response = require('./response.json');
 const additionalResponse = require('./clickResponse.json');
 
 const tableStyles = (theme) => ({
@@ -55,7 +55,7 @@ const tableStyles = (theme) => ({
 class TableComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { expanded: false, nodeId: 2, }
+        this.state = { expanded: false, nodeId: 2, response: this.props.data};
         this.handleChange = this.handleChange.bind(this);
 
     }
@@ -64,8 +64,9 @@ class TableComponent extends React.Component {
         this.state.expanded ? this.setState({ expanded: false }) : this.setState({ expanded: panel });
     };
 
-    createData(response) {
-        const nodeData = response.result.companies.find(function(x) {
+    createData() {
+        if ( !this.state.response.result ) return;
+        const nodeData = this.state.response.result.companies.find(function(x) {
             return x.url.replace('www.', '') == this.props.nodeId;
         }.bind(this));
         var nodeObj = {}
@@ -78,39 +79,41 @@ class TableComponent extends React.Component {
 
     render() {
         //const { users } = this.state;
-        const displayData = this.createData(response);
+        const displayData = this.createData();
         //const additionalData = this.createAdditionalData(additionalResponse.opencorporates)
         const classes = tableStyles();
+        debugger
         return (
             <div style={classes.root}>
                 <h4>{this.props.nodeId}</h4>
+                {displayData ? 
+                    (<Accordion style={classes.accord} expanded={this.state.expanded === 'panel1'} value='panel1' onChange={(e) => this.handleChange("panel1", e)}>
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1bh-content" id="panel1bh-header" >
+                            <Typography className={classes.heading}>Basic Information</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails>
 
-                <Accordion style={classes.accord} expanded={this.state.expanded === 'panel1'} value='panel1' onChange={(e) => this.handleChange("panel1", e)}>
-                    <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1bh-content" id="panel1bh-header" >
-                        <Typography className={classes.heading}>Basic Information</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-
-                        <table style={classes.table}>
-                            <tr>
-                                <td style = {classes.rowKey}>Company Name</td>
-                                <td style = {classes.rowValue} align="right">{displayData['companyName']}</td>
-                            </tr>
-                            <tr>
-                                <td style = {classes.rowKey}>URL</td>
-                                <td style = {classes.rowValue} align="right">{displayData['url']}</td>
-                            </tr>
-                            <tr>
-                                <td style = {classes.rowKey}>Sector</td>
-                                <td style = {classes.rowValue} align="right">{displayData['sector']}</td>
-                            </tr>
-                            <tr>
-                                <td style = {classes.rowKey}>NAICS Code</td>
-                                <td style = {classes.rowValue} align="right">{displayData['naicsCode']}</td>
-                            </tr>
-                        </table>
-                    </AccordionDetails>
-                </Accordion>
+                            <table style={classes.table}>
+                                <tr>
+                                    <td style = {classes.rowKey}>Company Name</td>
+                                    <td style = {classes.rowValue} align="right">{displayData['companyName']}</td>
+                                </tr>
+                                <tr>
+                                    <td style = {classes.rowKey}>URL</td>
+                                    <td style = {classes.rowValue} align="right">{displayData['url']}</td>
+                                </tr>
+                                <tr>
+                                    <td style = {classes.rowKey}>Sector</td>
+                                    <td style = {classes.rowValue} align="right">{displayData['sector']}</td>
+                                </tr>
+                                <tr>
+                                    <td style = {classes.rowKey}>NAICS Code</td>
+                                    <td style = {classes.rowValue} align="right">{displayData['naicsCode']}</td>
+                                </tr>
+                            </table>
+                        </AccordionDetails>
+                    </Accordion>) : ''
+                }
                 <Accordion style={classes.accord} expanded={this.state.expanded === 'panel2'} value='panel2' onChange={(e) => this.handleChange("panel2", e)}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel2bh-content" id="panel2bh-header" >
                         <Typography className={classes.heading}>Additional Information</Typography>

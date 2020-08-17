@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import './PageContent.css'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
@@ -36,7 +36,7 @@ const LandingComponent = ({textState, boolState, setTextState, setBoolState, onT
     );
 }
 
-const ResultComponent = ({onToggle}) => {
+const ResultComponent = ({onToggle, plan}) => {
     const classes = useStyles(); 
     return(
         <div>
@@ -64,7 +64,7 @@ const ResultComponent = ({onToggle}) => {
                 </div>
             </div>
             <div className = {classes.resultContainer}>
-                <GraphComponent />
+                <GraphComponent businessPlan={plan}/>
             </div>
         </div>
     );
@@ -104,6 +104,7 @@ const PageContent = ({graphDimension}) => {
     const [textState, setTextState] = useState('');
     const [boolState, setBoolState] = useState('option1');
     
+    
     const classes = useStyles();
     return (
         <div className="parent">
@@ -113,7 +114,7 @@ const PageContent = ({graphDimension}) => {
                     showResultState ? 
                         <LandingComponent textState={textState} boolState={boolState} setTextState={setTextState} setBoolState={setBoolState} onToggle={() => setResultState(!showResultState)} /> 
                             : 
-                        <ResultComponent onToggle={() => setResultState(!showResultState)} dimension={graphDimension} /> 
+                        <ResultComponent onToggle={() => setResultState(!showResultState)} dimension={graphDimension} plan={textState}/> 
                 } 
             </div>
         </div>

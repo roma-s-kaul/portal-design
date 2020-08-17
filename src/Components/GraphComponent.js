@@ -9,8 +9,8 @@ import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import * as d3 from 'd3';
 import './GraphComponent.css';
-
-const response = require('./response.json');
+import getData from './api.js';
+//const response = require('./response.json');
 
 const temp = {
     root: {
@@ -59,45 +59,41 @@ class GraphComponent extends Component {
     constructor(props) {
         super(props);
         this.graphRef = React.createRef();
+        
         this.state = { 
+            response: {},
+            businessPlan: this.props.businessPlan,
             view: "graph",
             nodeId: "My Plan",
             myConfig:  {
-                
                 nodeHighlightBehavior: true,
-                //automaticRearrangeAfterDropNode: true,
                 maxZoom: 1,
+                //focusZoom: 1,
                 minZoom: 0.1,
                 initialZoom: 1,
                 panAndZoom: true,
                 height: 400,
-                width: 900,
-                //disableLinkForce: false,
-                directed: false,
+                width: 600,
                 node: {
-                    //color: "wheat",
                     size: 200,
-                    fontSize: 18,
+                    fontSize: 12,
                     labelPosition: "left",
-                    fontColor: "white"
-                    //highlightStrokeColor: "white"
+                    fontColor: "white",
+                    highlightFontSize: 18
                 },
                 link: {
-                    highlightColor: "lightblue",
+                    highlightColor: "red",
                     color: 'white',
                     renderLabel: true,
-                    fontSize: 18,
-                    //semanticStrokeWidth: true,
+                    fontSize: 12,
+                    opacity : 1,
                     fontColor: 'wheat',
-                    type: 'STRAIGHT',
-                    //markerWidth: 10
-                    //strokeWidth: 300
+                    type: 'STRAIGHT'
                 },
                 d3: {
                     gravity: -1000,
                     disableLinkForce: true,
                     //linkLength: 3000,
-                    //staticGraph: true
                 }
             }
         };
@@ -109,14 +105,17 @@ class GraphComponent extends Component {
 
     componentDidMount() {
         var myConfig = {...this.state.myConfig};
-        debugger;
         myConfig.width = this.graphRef.current.clientWidth;
         myConfig.height = this.graphRef.current.clientHeight - 51 - 32;
 
         this.setState({myConfig});
+        getData(this.state.businessPlan).then((reply)=> this.setState({response: reply}));
         /*force.on('tick', () => {
             this.forceUpdate()
             });*/
+        //var myurl="http://ckg03.isi.edu:8050/getneighborfrombusinessplan?businessplan="
+       
+        
         
     }
     
@@ -125,52 +124,73 @@ class GraphComponent extends Component {
         var linkObj = [];
         //fetch('').then(response => 
             //response.json().then(data => {
-                var maxNodes = 10;
-                var originHeight = this.state.myConfig.height * 0.8;
-                var xoffset = this.state.myConfig.width / (maxNodes + 1);
-                var originWidth = ((this.state.myConfig.width) / 2) + xoffset;
-                var yoffset = originHeight / ((maxNodes / 2) + 1);
-                var counter = 0;
-                var xCoord = originWidth;
-                var yCoord = this.state.myConfig.height;
-                response.result.companies.forEach(company => {
-                    var com = company.url.replace('www.', '');
-                    var color = this.getNodeColor(company);
-                    //mpPlan do nothing
-                    if(counter != 0) {
-                        xCoord = (counter + 1) * xoffset;
-                        if(counter <= maxNodes/2) {
-                            yCoord = originHeight - ((counter - 1) * yoffset);
-                        } else {
-                            yCoord = originHeight - (((maxNodes/2) - 1) * yoffset) + ((counter - 1 - (maxNodes/2)) * yoffset);
-                        }
-                    }
-                    counter += 1;
-                    
-                    var tempObj = {
-                        id: com,
-                        companyName: company.Company_Name,
-                        url: company.url,
-                        naicsCode: company.NAICS_code,
-                        sector: company.sector,
-                        color: color,
-                        x: xCoord,
-                        y: yCoord
-                        
-                    }
-                    nodeObj.push(tempObj);
-                });
-           // })
-       // )
-        
+        var maxPoints = 10
+        var usableHeight = this.state.myConfig.height 
+        var usableWidth = this.state.myConfig.width 
+        var originXCoord = usableWidth / 2
+        var originYCoord = usableHeight / 2
+        var radius = Math.min(originXCoord, originYCoord)
+        var startDegree = -90
+        var jumpDegree = 360 / maxPoints
+        var xCoord = originXCoord
+        var yCoord = originYCoord
+        var counter = 0
+        var degree = 0;
+// For semicircle make `originYCoord = usableHeight` and `jumpDegree = 180 / maxPoints`
+        if(!this.state.response.result) return null; 
+        this.state.response.result.companies.forEach(company => {
+            var com = company.url.replace('www.', '');
+            var color = this.getNodeColor(company);
+            //mpPlan do nothing
+            var companyName = '';
+            if(counter != 0) {
+                degree = startDegree + (counter * jumpDegree)
+                xCoord = originXCoord + (radius * Math.sin((Math.PI * degree) / 180))
+                yCoord = originYCoord + (radius * Math.cos((Math.PI * degree) / 180))
+            }
+            var alignment = 'left';
+            if(xCoord > originXCoord) {
+                alignment = 'right';
+            }
+            if(counter == 0) {
+                alignment = 'bottom';
+            }
+            
+            counter += 1
+            
+            
 
-        Object.keys(response.result.similarity).forEach(key => {
-            var similarity = (response.result.similarity[key].sim).toFixed(3);
-            if(similarity > 0.3) {
+            var tempObj = {
+                id: com,
+                companyName: company.Company_Name,
+                url: company.url,
+                naicsCode: company.NAICS_code,
+                sector: company.sector,
+                color: color,
+                x: xCoord,
+                y: yCoord,
+                labelPosition: alignment
+            }
+            nodeObj.push(tempObj);
+        });
+        
+        var minSim = 1
+        Object.keys(this.state.response.result.similarity).forEach(key => {
+            if(this.state.response.result.similarity[key].start == 'My Plan' && minSim > (this.state.response.result.similarity[key].sim).toFixed(2))
+                minSim = (this.state.response.result.similarity[key].sim).toFixed(2);
+        });
+        Object.keys(this.state.response.result.similarity).forEach(key => {
+            var similarity = (this.state.response.result.similarity[key].sim).toFixed(3);
+            var lineStyle = 'STRAIGHT';
+            if((this.state.response.result.similarity[key].start) != 'My Plan') {
+                lineStyle = 'CURVE_SMOOTH';
+            }
+            if(similarity >= minSim) {
                 var tempObj = {
-                    target: response.result.similarity[key].end,
-                    source: response.result.similarity[key].start,
-                    label: (response.result.similarity[key].sim).toFixed(3)
+                    target: this.state.response.result.similarity[key].end,
+                    source: this.state.response.result.similarity[key].start,
+                    label: (this.state.response.result.similarity[key].sim).toFixed(2),
+                    type: lineStyle
                 }
                 linkObj.push(tempObj);
             }
@@ -179,7 +199,8 @@ class GraphComponent extends Component {
         
         return {
                 nodes: nodeObj,
-                links: linkObj
+                links: linkObj,
+                focusedNodeId: 'My Plan'
         };
     }
     
@@ -238,9 +259,8 @@ class GraphComponent extends Component {
 
     
     render() {
-        const graphData = this.transformData();
         let config = this.state.myConfig;
-
+        const graphData = this.transformData();
         return (
             <div style={temp.root}>
                     <div style={temp.graph} ref={this.graphRef}>
@@ -254,12 +274,13 @@ class GraphComponent extends Component {
                             </ToggleButton>
                         </ToggleButtonGroup>
                     </div>
-                        {(this.state.view === "graph") ? 
+                        {graphData ? (this.state.view === "graph") ? 
                         <Graph id="graph-id" data={graphData} config={config} 
-                        onClickNode={(nodeId) => this.onClickNode(nodeId)}/> : <StickyHeadTable data = {graphData}/>}
+                        onClickNode={(nodeId) => this.onClickNode(nodeId)}/> : <StickyHeadTable data = {graphData}/> : ""}
                     </div>
                 <div style={temp.additionalInfo} >
-                    <TableComponent nodeId={this.state.nodeId}/>
+                    {graphData ? 
+                    <TableComponent nodeId={this.state.nodeId} data = {this.state.response}/> : ''}
                 </div>
             </div>
         

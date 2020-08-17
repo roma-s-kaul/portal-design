@@ -16,10 +16,6 @@
     border-bottom: black !important;
 }
 
-.MuiToggleButton-root {
-    border: none !important;
-}
-
-.MuiSvgIcon-root {
-    fill: 'white' !important;
+.MuiTableSortLabel-root.MuiTableSortLabel-active, .MuiTableSortLabel-root:hover{
+    color: 'white' !important;
 }

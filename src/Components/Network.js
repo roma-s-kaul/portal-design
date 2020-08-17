@@ -1,5 +1,6 @@
-/*import React from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
+import PropTypes from 'prop-types';
 import Paper from '@material-ui/core/Paper';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -7,68 +8,145 @@ import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
+import TableSortLabel from '@material-ui/core/TableSortLabel';
 import './Network.css';
 
 const columns = [
-  { id: 'source', label: 'Company Name', minWidth: 170 },
-  { id: 'target', label: 'Similar Company', minWidth: 170 },
-  { id: 'label', label: 'Similarity Value', minWidth: 170, align: 'center',
-    format: (value) => value.toLocaleString('en-US'),
-  }
+  { id: 'source', label: 'Company Name', minWidth: 170, numeric: false, },
+  { id: 'target', label: 'Similar Company', minWidth: 170, numeric: false, },
+  { id: 'label', label: 'Similarity Value', minWidth: 170, numeric: false}
 ];
 
 const useStyles = makeStyles({
   root: {
     width: '100%',
-    height: '100%'
+    height: '100%',
+    maxHeight: 440,
   },
   container: {
-    maxHeight: 440,
     backgroundColor: '#222222',
-    boxShadow: "5px 5px 10px #1d1d1d, -5px -5px 10px #272727; !important"
+    boxShadow: "5px 5px 10px #1d1d1d, -5px -5px 10px #272727; !important",
+    height: '100%'
   },
   data: {
-      color: 'white'
+      color: 'white',
+      fill: 'white'
+  },
+  paper: {
+    width: '100%'
+  },
+  table: {
+    minWidth: 750,
+  },
+  visuallyHidden: {
+    border: 0,
+    clip: 'rect(0 0 0 0)',
+    height: 1,
+    margin: -1,
+    overflow: 'hidden',
+    padding: 0,
+    position: 'absolute',
+    top: 20,
+    width: 1,
   }
 });
 
-const headCells = [
-  { id: 'source', numeric: false, disablePadding: true, label: 'Company Name' },
-  { id: 'target', numeric: false, disablePadding: false, label: 'Similar Company' },
-  { id: 'simVal', numeric: true, disablePadding: false, label: 'Similarity Value' }
-];
+function EnhancedTableHead(props) {
+  const { classes, order, orderBy, onRequestSort } = props;
+  const createSortHandler = (property) => (event) => {
+    onRequestSort(event, property);
+  };
+
+  return (
+    <TableHead>
+      <TableRow>
+        {columns.map((column) => (
+          <TableCell
+            className = {classes.data}
+            key={column.id}
+            align={column.numeric ? 'right' : 'left'}
+            padding='default'
+            sortDirection={orderBy === column.id ? order : false}
+          >
+            <TableSortLabel
+              className = {classes.data}
+              active={orderBy === column.id}
+              direction={orderBy === column.id ? order : 'asc'}
+              onClick={createSortHandler(column.id)}
+            >
+              {column.label}
+              {orderBy === column.id ? (
+                <span className={classes.visuallyHidden}>
+                  {order === 'desc' ? 'sorted descending' : 'sorted ascending'}
+                </span>
+              ) : null}
+            </TableSortLabel>
+          </TableCell>
+        ))}
+      </TableRow>
+    </TableHead>
+  );
+}
+
+EnhancedTableHead.propTypes = {
+  classes: PropTypes.object.isRequired,
+  onRequestSort: PropTypes.func.isRequired,
+  order: PropTypes.oneOf(['asc', 'desc']).isRequired,
+  orderBy: PropTypes.string.isRequired
+};
+
+function descendingComparator(a, b, orderBy) {
+  if (b[orderBy] < a[orderBy]) {
+    return -1;
+  }
+  if (b[orderBy] > a[orderBy]) {
+    return 1;
+  }
+  return 0;
+}
+
+function getComparator(order, orderBy) {
+  return order === 'desc'
+    ? (a, b) => descendingComparator(a, b, orderBy)
+    : (a, b) => -descendingComparator(a, b, orderBy);
+}
+
+function stableSort(array, comparator) {
+  const stabilizedThis = array.map((el, index) => [el, index]);
+  stabilizedThis.sort((a, b) => {
+    const order = comparator(a[0], b[0]);
+    if (order !== 0) return order;
+    return a[1] - b[1];
+  });
+  return stabilizedThis.map((el) => el[0]);
+}
+
 
 export default function StickyHeadTable(networkData) {
   const classes = useStyles();
   const [order, setOrder] = React.useState('asc');
   const [orderBy, setOrderBy] = React.useState('simVal');
+
   const handleRequestSort = (event, property) => {
     const isAsc = orderBy === property && order === 'asc';
     setOrder(isAsc ? 'desc' : 'asc');
     setOrderBy(property);
   };
 
+  
 
   return (
     <Paper className={classes.root}>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
-          <TableHead>
-            <TableRow>
-              {headCells.map((headCell) => (
-                <TableCell
-                  key={headCell.id}
-                  align={headCell.numeric ? 'right' : 'left'}
-                  padding={headCell.disablePadding ? 'none' : 'default'}
-                  sortDirection={orderBy === headCell.id ? order : false}
-                >
-                  {column.label}
-                </TableCell>
-              ))}
-            </TableRow>
-          </TableHead>
+          <EnhancedTableHead
+              classes={classes}
+              order={order}
+              orderBy={orderBy}
+              onRequestSort={handleRequestSort}
+            />
           <TableBody>
-            {networkData.data.links.map((row) => {
+            {stableSort(networkData.data.links, getComparator(order, orderBy)).map((row) => {
               return (
                 <TableRow hover role="checkbox" tabIndex={-1} key={row.code}>
                   {columns.map((column) => {
@@ -87,9 +165,9 @@ export default function StickyHeadTable(networkData) {
       </TableContainer>
     </Paper>
   );
-}*/
+}
 
-import React from 'react';
+/*import React from 'react';
 import PropTypes from 'prop-types';
 import clsx from 'clsx';
 import { lighten, makeStyles } from '@material-ui/core/styles';
@@ -111,7 +189,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Switch from '@material-ui/core/Switch';
 import DeleteIcon from '@material-ui/icons/Delete';
 import FilterListIcon from '@material-ui/icons/FilterList';
-import './Network.css';
+import './Network.css'; 
 
 function createData(source, target, simVal) {
   return { source, target, simVal};
@@ -371,4 +449,4 @@ export default function EnhancedTable() {
       </Paper>
     </div>
   );
-}
+}*/
