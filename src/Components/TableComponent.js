@@ -82,7 +82,6 @@ class TableComponent extends React.Component {
         const displayData = this.createData();
         //const additionalData = this.createAdditionalData(additionalResponse.opencorporates)
         const classes = tableStyles();
-        debugger
         return (
             <div style={classes.root}>
                 <h4>{this.props.nodeId}</h4>

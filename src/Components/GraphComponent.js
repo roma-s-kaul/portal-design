@@ -176,11 +176,11 @@ class GraphComponent extends Component {
         
         var minSim = 1
         Object.keys(this.state.response.result.similarity).forEach(key => {
-            if(this.state.response.result.similarity[key].start == 'My Plan' && minSim > (this.state.response.result.similarity[key].sim).toFixed(2))
-                minSim = (this.state.response.result.similarity[key].sim).toFixed(2);
+            if(this.state.response.result.similarity[key].start == 'My Plan' && minSim > (this.state.response.result.similarity[key].sim))
+                minSim = (this.state.response.result.similarity[key].sim);
         });
         Object.keys(this.state.response.result.similarity).forEach(key => {
-            var similarity = (this.state.response.result.similarity[key].sim).toFixed(3);
+            var similarity = (this.state.response.result.similarity[key].sim);
             var lineStyle = 'STRAIGHT';
             if((this.state.response.result.similarity[key].start) != 'My Plan') {
                 lineStyle = 'CURVE_SMOOTH';
