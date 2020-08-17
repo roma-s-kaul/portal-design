@@ -29,7 +29,8 @@ const tableStyles = (theme) => ({
     table: {
         position: "relative",
         width: "100%",
-        height: "100%"
+        height: "100%",
+        overflowWrap: "anywhere"
     },
     rowKey: {
         textAlign: "left",
@@ -42,11 +43,12 @@ const tableStyles = (theme) => ({
         overflow: "auto"
     },
     accord: {
-        boxShadow: "0px 4px 8px 0px rgb(255 255 255 / 20%), 0px 4px 8px 0px rgb(255 255 255 / 14%), 0px 4px 8px 0px rgb(255 255 255 / 12%)",
-    backgroundColor: "#312f2f",
-    color: "white",
-    margin: "16px 0",
-    borderRadius: "10px"
+        boxShadow: "5px 5px 10px #1d1e1e, -5px -5px 10px #272828",
+        backgroundColor: "rgb(34,35,35)",
+        color: "white",
+        borderRadius: "10px",
+        //margin: "20px 0"
+        marginBottom: "2rem"
     }
 });
 
@@ -63,33 +65,16 @@ class TableComponent extends React.Component {
     };
 
     createData(response) {
-        const nodeData = response.result.find(function(x) {
-            return x.url == this.props.nodeId;
+        const nodeData = response.result.companies.find(function(x) {
+            return x.url.replace('www.', '') == this.props.nodeId;
         }.bind(this));
         var nodeObj = {}
-        nodeObj['id'] = nodeData.id;
-        //nodeObj['labels'] = nodeData.labels;
-        nodeObj['companyName'] = nodeData.companyName || '-';
-        nodeObj['naicsCode'] = nodeData.naicsCode || '-';
+        nodeObj['companyName'] = nodeData.Company_Name || '-';
+        nodeObj['naicsCode'] = nodeData.NAICS_code || '-';
         nodeObj['sector'] = nodeData.sector || '-';
         nodeObj['url'] = nodeData.url || '-';
-        //let relationshipData = graph.relationships.find(node => node.properties.url == this.props.nodeId);
-        //nodeObj['type'] = relationshipData.type;
-        //nodeObj['score'] = relationshipData.properties.score;
         return nodeObj;
     }
-
-    /*createAdditionalData(openCorp) {
-        let addObj = {}
-        addObj['AgentName']=
-        addObj['Retrieve'] =
-        addObj['']
-    }*/
-    /*componentDidMount() {
-        fetch('https://randomuser.me/api/1.1/?results=15')
-            .then(response => response.json())
-            .then(data => { this.setState({ users: data.results }) });
-    }*/
 
     render() {
         //const { users } = this.state;
@@ -98,7 +83,7 @@ class TableComponent extends React.Component {
         const classes = tableStyles();
         return (
             <div style={classes.root}>
-                <h4> Id selected: {this.props.nodeId}</h4>
+                <h4>{this.props.nodeId}</h4>
 
                 <Accordion style={classes.accord} expanded={this.state.expanded === 'panel1'} value='panel1' onChange={(e) => this.handleChange("panel1", e)}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel1bh-content" id="panel1bh-header" >
@@ -113,26 +98,17 @@ class TableComponent extends React.Component {
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>URL</td>
-                                <td style = {classes.rowValue} align="right">{displayData['id']}</td>
+                                <td style = {classes.rowValue} align="right">{displayData['url']}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>Sector</td>
                                 <td style = {classes.rowValue} align="right">{displayData['sector']}</td>
                             </tr>
                             <tr>
-                                <td style = {classes.rowKey}>Label</td>
-                                <td style = {classes.rowValue} align="right">{displayData['labels']}</td>
-                            </tr>
-                            <tr>
-                                <td style = {classes.rowKey}>Score</td>
-                                <td style = {classes.rowValue} align="right">{displayData['score']}</td>
-                            </tr>
-                            <tr>
                                 <td style = {classes.rowKey}>NAICS Code</td>
                                 <td style = {classes.rowValue} align="right">{displayData['naicsCode']}</td>
                             </tr>
                         </table>
-
                     </AccordionDetails>
                 </Accordion>
                 <Accordion style={classes.accord} expanded={this.state.expanded === 'panel2'} value='panel2' onChange={(e) => this.handleChange("panel2", e)}>
@@ -144,43 +120,43 @@ class TableComponent extends React.Component {
                         <table style={classes.table}>
                             <tr>
                                 <td style = {classes.rowKey}>Agent Name</td>
-                                <td style = {classes.rowValue} align="right">{displayData['AgentName']}</td>
+                                <td style = {classes.rowValue} align="right">{additionalResponse.opencorporates.agent_name || '-'}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>Retrieved At</td>
-                                <td style = {classes.rowValue} align="right">{displayData['Retrieve']}</td>
+                                <td style = {classes.rowValue} align="right">{additionalResponse.opencorporates.retrieved_at || '-'}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>Updated At</td>
-                                <td style = {classes.rowValue} align="right">{displayData['Sector']}</td>
+                                <td style = {classes.rowValue} align="right">{additionalResponse.opencorporates.updated_at || '-'}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>Incorporation Date</td>
-                                <td style = {classes.rowValue} align="right">{displayData['labels']}</td>
+                                <td style = {classes.rowValue} align="right">{additionalResponse.opencorporates.incorporation_date || '-'}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>Jurisdiction Code</td>
-                                <td style = {classes.rowValue} align="right">{displayData['score']}</td>
+                                <td style = {classes.rowValue} align="right">{additionalResponse.opencorporates.jurisdiction_code || '-'}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>Company Type</td>
-                                <td style = {classes.rowValue} align="right">{displayData['NAICS Code']}</td>
+                                <td style = {classes.rowValue} align="right">{additionalResponse.opencorporates.company_type || '-'}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>Agent Address</td>
-                                <td style = {classes.rowValue} align="right">{displayData['NAICS Code']}</td>
+                                <td style = {classes.rowValue} align="right">{additionalResponse.opencorporates.agent_address || '-'}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>Current Status</td>
-                                <td style = {classes.rowValue} align="right">{displayData['NAICS Code']}</td>
+                                <td style = {classes.rowValue} align="right">{additionalResponse.opencorporates.current_status || '-'}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>Company Number</td>
-                                <td style = {classes.rowValue} align="right">{displayData['NAICS Code']}</td>
+                                <td style = {classes.rowValue} align="right">{additionalResponse.opencorporates.company_number || '-'}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>Registry Url</td>
-                                <td style = {classes.rowValue} align="right">{displayData['NAICS Code']}</td>
+                                <td style = {classes.rowValue} align="right">{additionalResponse.opencorporates.registry_url || '-'}</td>
                             </tr>
                         </table>
 

@@ -1,14 +1,118 @@
-{"sector": "Other", "url": "www.motivateroi.com", "opencorporates": 
-    {"dissolution_date": null, 
-        "branch_status": null, 
-        "corporate_groupings": [], 
-        "agent_name": "MITCHELL, TRACEY", 
-        "retrieved_at": "2018-08-05T11:43:20+00:00", 
-        "updated_at": "2018-09-23T18:25:29+00:00", 
-        "industry_codes": [], 
-        "inactive": false, 
-        "controlling_entity": null, 
-        "registered_address_in_full": null, 
-        "incorporation_date": "2007-10-19", 
-        "data": {"url": "https://opencorporates.com/companies/us_al/254-769/data", 
-            "total_count": 1, "most_recent": [{"datum": {"description": "MOBILE, AL", "opencorporates_url": "https://opencorporates.com/data/26891896", "id": 26891896, "data_type": "CompanyAddress", "title": "Head Office Address"}}]}, "previous_names": [], "trademark_registrations": [], "opencorporates_url": "https://opencorporates.com/companies/us_al/254-769", "officers": [{"officer": {"uid": null, "end_date": null, "current_status": null, "id": 100496837, "date_of_birth": null, "inactive": false, "address": null, "position": "incorporator", "nationality": null, "occupation": null, "opencorporates_url": "https://opencorporates.com/officers/100496837", "start_date": null, "name": "MITCHELL, TRACEY"}}, {"officer": {"uid": null, "end_date": null, "current_status": null, "id": 100496838, "date_of_birth": null, "inactive": false, "address": "2329 EAST RINGOLD DR\nMOBILE, AL 36609", "position": "agent", "nationality": null, "occupation": null, "opencorporates_url": "https://opencorporates.com/officers/100496838", "start_date": null, "name": "MITCHELL, TRACEY"}}], "jurisdiction_code": "us_al", "source": {"url": "http://arc-sos.state.al.us/cgi/corpdetail.mbr/detail?corp=254769", "publisher": "Alabama Secretary of State", "retrieved_at": "2018-08-05T11:43:20+00:00"}, "native_company_number": null, "branch": null, "ultimate_beneficial_owners": [], "filings": [{"filing": {"uid": null, "date": "2007-10-19", "opencorporates_url": "https://opencorporates.com/filings/328750697", "id": 328750697, "title": "Certificate of Formation"}}, {"filing": {"uid": null, "date": "2007-10-19", "opencorporates_url": "https://opencorporates.com/filings/281683501", "id": 281683501, "title": "Articles of Formation"}}], "company_type": "Domestic Corporation", "previous_registration_entities": [], "agent_address": "2329 EAST RINGOLD DR\nMOBILE, AL 36609", "number_of_employees": null, "subsequent_registration_entities": [], "name": "Motivate, Inc.", "home_company": null, "created_at": "2014-08-31T00:35:36+00:00", "identifiers": [], "company_number": "254-769", "current_status": "Exists", "alternate_registration_entities": [], "financial_summary": null, "alternative_names": [], "registry_url": "http://arc-sos.state.al.us/cgi/corpdetail.mbr/detail?corp=254769"}, "NAICS_code": 541840, "Company_Name": "MOTIVATE INC", "recall_status": "Success"}
+{
+    "NAICS_code": 541840,
+    "sector": "Other",
+    "Company_Name": "MOTIVATE INC",
+    "url": "www.motivateroi.com",
+    "opencorporates": {
+        "name": "Motivate, Inc.",
+        "company_number": "254-769",
+        "jurisdiction_code": "us_al",
+        "incorporation_date": "2007-10-19",
+        "dissolution_date": null,
+        "company_type": "Domestic Corporation",
+        "registry_url": "http://arc-sos.state.al.us/cgi/corpdetail.mbr/detail?corp=254769",
+        "branch": null,
+        "branch_status": null,
+        "inactive": false,
+        "current_status": "Exists",
+        "created_at": "2014-08-31T00:35:36+00:00",
+        "updated_at": "2018-09-23T18:25:29+00:00",
+        "retrieved_at": "2018-08-05T11:43:20+00:00",
+        "opencorporates_url": "https://opencorporates.com/companies/us_al/254-769",
+        "source": {
+            "publisher": "Alabama Secretary of State",
+            "url": "http://arc-sos.state.al.us/cgi/corpdetail.mbr/detail?corp=254769",
+            "retrieved_at": "2018-08-05T11:43:20+00:00"
+        },
+        "agent_name": "MITCHELL, TRACEY",
+        "agent_address": "2329 EAST RINGOLD DR\nMOBILE, AL 36609",
+        "alternative_names": [],
+        "previous_names": [],
+        "number_of_employees": null,
+        "native_company_number": null,
+        "alternate_registration_entities": [],
+        "previous_registration_entities": [],
+        "subsequent_registration_entities": [],
+        "registered_address_in_full": null,
+        "industry_codes": [],
+        "identifiers": [],
+        "trademark_registrations": [],
+        "corporate_groupings": [],
+        "data": {
+            "most_recent": [
+                {
+                    "datum": {
+                        "id": 26891896,
+                        "title": "Head Office Address",
+                        "data_type": "CompanyAddress",
+                        "description": "MOBILE, AL",
+                        "opencorporates_url": "https://opencorporates.com/data/26891896"
+                    }
+                }
+            ],
+            "total_count": 1,
+            "url": "https://opencorporates.com/companies/us_al/254-769/data"
+        },
+        "financial_summary": null,
+        "home_company": null,
+        "controlling_entity": null,
+        "ultimate_beneficial_owners": [],
+        "filings": [
+            {
+                "filing": {
+                    "id": 328750697,
+                    "title": "Certificate of Formation",
+                    "uid": null,
+                    "opencorporates_url": "https://opencorporates.com/filings/328750697",
+                    "date": "2007-10-19"
+                }
+            },
+            {
+                "filing": {
+                    "id": 281683501,
+                    "title": "Articles of Formation",
+                    "uid": null,
+                    "opencorporates_url": "https://opencorporates.com/filings/281683501",
+                    "date": "2007-10-19"
+                }
+            }
+        ],
+        "officers": [
+            {
+                "officer": {
+                    "id": 100496837,
+                    "name": "MITCHELL, TRACEY",
+                    "position": "incorporator",
+                    "uid": null,
+                    "start_date": null,
+                    "end_date": null,
+                    "opencorporates_url": "https://opencorporates.com/officers/100496837",
+                    "occupation": null,
+                    "inactive": false,
+                    "current_status": null,
+                    "address": null,
+                    "nationality": null,
+                    "date_of_birth": null
+                }
+            },
+            {
+                "officer": {
+                    "id": 100496838,
+                    "name": "MITCHELL, TRACEY",
+                    "position": "agent",
+                    "uid": null,
+                    "start_date": null,
+                    "end_date": null,
+                    "opencorporates_url": "https://opencorporates.com/officers/100496838",
+                    "occupation": null,
+                    "inactive": false,
+                    "current_status": null,
+                    "address": "2329 EAST RINGOLD DR\nMOBILE, AL 36609",
+                    "nationality": null,
+                    "date_of_birth": null
+                }
+            }
+        ]
+    },
+    "recall_status": "Success"
+}

@@ -1,0 +1,25 @@
+.MuiTableCell-stickyHeader {
+    background-color: #191919 !important;
+}
+
+.MuiTableCell-head {
+    color: white !important;
+}
+
+.MuiTable-root  {
+    background-color: #222222 !important;
+}
+
+
+.MuiTableCell-root, .MuiTableCell-body, .MuiTableCell-alignLeft {
+    color: 'wheat' !important;
+    border-bottom: black !important;
+}
+
+.MuiToggleButton-root {
+    border: none !important;
+}
+
+.MuiSvgIcon-root {
+    fill: 'white' !important;
+}
