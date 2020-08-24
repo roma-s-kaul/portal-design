@@ -3,13 +3,15 @@ import React, {Component} from 'react';
 import { Graph } from 'react-d3-graph';
 import TableComponent from './TableComponent';
 import StickyHeadTable from './Network';
-import ViewModuleIcon from '@material-ui/icons/ViewModule';
-import ViewQuiltIcon from '@material-ui/icons/ViewQuilt';
+import AcUnitIcon from '@material-ui/icons/AcUnit';
+import StorageIcon from '@material-ui/icons/Storage';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import * as d3 from 'd3';
 import './GraphComponent.css';
 import getData from './api.js';
+import {VictoryLegend, VictoryContainer} from 'victory';
+
 //const response = require('./response.json');
 
 const temp = {
@@ -51,7 +53,10 @@ const temp = {
         width: "300px",
       },
       svgTemp: {
-        fill: "white"
+        fill: "black"
+      },
+      toggleActive: {
+          fill: "white"
       }
 }
 
@@ -126,7 +131,7 @@ class GraphComponent extends Component {
             //response.json().then(data => {
         var maxPoints = 10
         var usableHeight = this.state.myConfig.height 
-        var usableWidth = this.state.myConfig.width 
+        var usableWidth = this.state.myConfig.width
         var originXCoord = usableWidth / 2
         var originYCoord = usableHeight / 2
         var radius = Math.min(originXCoord, originYCoord)
@@ -137,7 +142,7 @@ class GraphComponent extends Component {
         var counter = 0
         var degree = 0;
 // For semicircle make `originYCoord = usableHeight` and `jumpDegree = 180 / maxPoints`
-        if(!this.state.response.result) return null; 
+        if(!this.state.response || !this.state.response.result) return null; 
         this.state.response.result.companies.forEach(company => {
             var com = company.url.replace('www.', '');
             var color = this.getNodeColor(company);
@@ -245,7 +250,7 @@ class GraphComponent extends Component {
             case "Chemicals":
                 return 'blue';
             case "Oil and Petroleum Products":
-                return 'black';
+                return 'orange';
             case "Automobiles":
                 return 'pink';
             case "Mining and Minerals":
@@ -266,17 +271,18 @@ class GraphComponent extends Component {
                     <div style={temp.graph} ref={this.graphRef}>
                     <div>
                         <ToggleButtonGroup orientation="horizontal" value={this.view} exclusive>
-                            <ToggleButton value="graph" aria-label="graph" onClick={this.handleChange}>
-                                <ViewModuleIcon style={temp.svgTemp} />
+                            <ToggleButton  value="graph" aria-label="graph" onClick={this.handleChange}>
+                                <AcUnitIcon style={this.state.view == "graph" ? temp.toggleActive : temp.svgTemp} />
                             </ToggleButton>
                             <ToggleButton  value="network" aria-label="network" onClick={this.handleChange}>
-                                <ViewQuiltIcon style={temp.svgTemp}/>
+                                <StorageIcon style={this.state.view == "network" ? temp.toggleActive : temp.svgTemp}/>
                             </ToggleButton>
                         </ToggleButtonGroup>
                     </div>
                         {graphData ? (this.state.view === "graph") ? 
                         <Graph id="graph-id" data={graphData} config={config} 
-                        onClickNode={(nodeId) => this.onClickNode(nodeId)}/> : <StickyHeadTable data = {graphData}/> : ""}
+                        onClickNode={(nodeId) => this.onClickNode(nodeId)}/>
+                         : <StickyHeadTable data = {graphData}/> : ""}
                     </div>
                 <div style={temp.additionalInfo} >
                     {graphData ? 

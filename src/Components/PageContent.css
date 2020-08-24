@@ -20,15 +20,21 @@
   text-transform: capitalize;
 }
 .MuiFormGroup-root {
-   color: #90caf9
+   color: white 
 }
-
+.MuiButton-containedPrimary:hover {
+  background-color: whitesmoke !important;
+}
+.MuiInputBase-root {
+  color: #90caf9 !important;
+}
 .MuiFormLabel-root.Mui-focused {
-  color: #90caf9;
+  color: #90caf9 !important ;
+  font-size: medium !important;
 }
 
 .MuiInputBase-input {
-  color: #90caf9 !important;
+  color: white !important;
   font-family: Roboto, sans-serif;
 }
 
@@ -44,4 +50,16 @@
 
 .MuiInputLabel-root {
   color: #90caf9;
+}
+
+.MuiOutlinedInput-notchedOutline {
+  border-color: #90caf9 !important;
+}
+
+.MuiFormLabel-root {
+  color: white !important;
+  font-size: small !important;
+}
+.MuiRadio-root {
+  color: white !important;
 }

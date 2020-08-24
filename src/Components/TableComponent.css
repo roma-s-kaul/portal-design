@@ -17,7 +17,6 @@ tr.expandable > td {
 
 tr.expandable > td > .inner {
   margin: 15px;
-  overflow: hidden;
   overflow-wrap: anywhere !important;
 }
 
@@ -27,5 +26,9 @@ h4 {
 
 .MuiAccordionSummary-root {
   background-color: #1a1a1a !important;
-  border-radius: "10px" !important;
+  border-radius: 10px !important;
+}
+
+.MuiAccordion-root .MuiSvgIcon-root {
+  fill: white
 }

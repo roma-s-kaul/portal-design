@@ -11,6 +11,7 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 //const response = require('./response.json');
+import {VictoryLegend, VictoryContainer} from 'victory';
 const additionalResponse = require('./clickResponse.json');
 
 const tableStyles = (theme) => ({
@@ -39,8 +40,7 @@ const tableStyles = (theme) => ({
     rowValue: {
         textAlign: "right",
         fontStyle: "italic",
-        width: "67%",
-        overflow: "auto"
+        width: "67%"
     },
     accord: {
         boxShadow: "5px 5px 10px #1d1e1e, -5px -5px 10px #272828",
@@ -48,7 +48,8 @@ const tableStyles = (theme) => ({
         color: "white",
         borderRadius: "10px",
         //margin: "20px 0"
-        marginBottom: "2rem"
+        marginBottom: "2rem",
+        fill: "white"
     }
 });
 
@@ -164,6 +165,34 @@ class TableComponent extends React.Component {
 
                     </AccordionDetails>
                 </Accordion>
+                <h4>Legend</h4>
+                    <VictoryLegend
+                        height="750"
+                        containerComponent={<VictoryContainer responsive={true}/>}
+                        orientation="vertical"
+                        colorScale={[ "#68bdf6", "#6dce9e", "#faafc2", "#f2baf6", "#ff928c", "#fcea7e", "#ffc766", "#405f9e",
+                                        "#a5abb6", "#78cecb", "#b88cbb", "black", "blue", "orange", "pink", "white", "yellow",
+                                        "green" ]}
+                        borderPadding={{ bottom: 10, left: 20, right: 20 }}
+                        data={[{ name: "Automobiles", labels: { fill: "white", fontSize: 18}, symbol: { fill: "pink" }},
+                            { name: "Banks", labels: { fill: "white", fontSize: 18}, symbol: { fill: "#6dce9e" }},
+                            { name: "Chemicals", labels: { fill: "white", fontSize: 18}, symbol: { fill: "blue" }},
+                            { name: "Construction and Construction", labels: { fill: "white", fontSize: 18}, symbol: { fill: "#ff928c" }}, 
+                            { name: "Consumer Durables", labels: { fill: "white", fontSize: 18}, symbol: { fill: "#ffc766" }}, 
+                            { name: "Drugs", labels: { fill: "white", fontSize: 18}, symbol: { fill: "#b88cbb" }},
+                            { name: "Fabricated Products", labels: { fill: "white", fontSize: 18}, symbol: { fill: "#405f9e" }},
+                            { name: "Food", labels: { fill: "white", fontSize: 18}, symbol: { fill: "#fcea7e" }},
+                            { name: "Machinery and Business Equipme", labels: { fill: "white", fontSize: 18}, symbol: { fill: "#f2baf6" }},
+                            { name: "Mining and Minerals", labels: { fill: "white", fontSize: 18}, symbol: { fill: "white" }},
+                            { name: "Oil and Petroleum Products", labels: { fill: "white", fontSize: 18}, symbol: { fill: "orange" }},
+                            { name: "Other", labels: { fill: "white", fontSize: 18}, symbol: { fill: "#68bdf6" }},
+                            { name: "Retail Stores", labels: { fill: "white", fontSize: 18}, symbol: { fill: "#78cecb" }}, 
+                            { name: "Steel Works Etc", labels: { fill: "white", fontSize: 18}, symbol: { fill: "black" }},
+                            { name: "Textiles", labels: { fill: "white", fontSize: 18}, symbol: { fill: "#a5abb6" }},
+                            { name: "Transportation", labels: { fill: "white", fontSize: 18}, symbol: { fill: "#faafc2" }},
+                            { name: "Utilities", labels: { fill: "white", fontSize: 18}, symbol: { fill: "yellow" }}, 
+                            { name: "Undefined", labels: { fill: "white", fontSize: 18}, symbol: { fill: "green" }}]}
+                    />
             </div>
         );
     }

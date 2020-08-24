@@ -24,7 +24,8 @@ const useStyles = makeStyles({
     maxHeight: 440,
   },
   container: {
-    backgroundColor: '#222222',
+    //backgroundColor: '#222222',
+    backgroundColor: 'white',
     boxShadow: "5px 5px 10px #1d1d1d, -5px -5px 10px #272727; !important",
     height: '100%'
   },

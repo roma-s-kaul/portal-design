@@ -22,8 +22,8 @@ const LandingComponent = ({textState, boolState, setTextState, setBoolState, onT
             <div className="container">
                 <FormControl style={{width: "100%"}}component="fieldset">
                     <RadioGroup aria-label="startingPoint" name="options" value={boolState} onChange={e => setBoolState(e.target.value)}>
-                        <FormControlLabel value="option1" control={<Radio />} label="I will describe my product idea." />
-                        <FormControlLabel value="option2" control={<Radio />} label="I will describe a technology I want to commercialize." />
+                        <FormControlLabel value="option1" control={<Radio />} label="I will describe my product idea" />
+                        <FormControlLabel value="option2" control={<Radio />} label="I will describe a technology I want to commercialize" />
                     </RadioGroup>
                     
                     <TextField  className ={classes.textField} value = {textState} onChange = {e => setTextState(e.target.value)} id="outlined-multiline-static" label="Enter description" 
@@ -78,8 +78,6 @@ const useStyles = makeStyles((theme) => ({
          display: "flex",
          justifyContent: "center"
     },
-    edit: {
-    },
     resultContainer: {
         height: "calc(100%)",
         marginTop: "1.25rem",
@@ -88,14 +86,18 @@ const useStyles = makeStyles((theme) => ({
     },
     button: {
         marginTop: "2rem",
+        backgroundColor: "#90caf9",
+        color: "black"
     },
     formGroup: {
-        display: "flex"
+        display: "flex",
+        alignItems: "center",
+        alignContent: "center"
     },
     textField: {
         marginTop: "2rem",
-        width: "100%",
-        color:"#90caf9"
+        width: "40%",
+        color:"white"
     }
 }));
 

@@ -16,6 +16,19 @@
     border-bottom: black !important;
 }
 
-.MuiTableSortLabel-root.MuiTableSortLabel-active, .MuiTableSortLabel-root:hover{
+.MuiTableSortLabel-root.MuiTableSortLabel-active {
     color: 'white' !important;
+}
+
+
+.MuiTableSortLabel-root.MuiTableSortLabel-active {
+    color: white !important;
+}
+
+.MuiTableSortLabel-root:hover {
+    color: white !important;
+}
+
+.MuiTableSortLabel-root.MuiTableSortLabel-active.MuiTableSortLabel-root.MuiTableSortLabel-active .MuiTableSortLabel-icon {
+    color: white !important;
 }
