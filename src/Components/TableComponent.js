@@ -1,19 +1,16 @@
 /*jshint esversion: 9 */
 import React from 'react';
-import { render } from 'react-dom';
-import { slideDown, slideUp } from './anim';
 import './TableComponent.css';
-
-import { makeStyles } from '@material-ui/core/styles';
+import { getAdditionalInfo } from './api';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-//const response = require('./response.json');
 import {VictoryLegend, VictoryContainer} from 'victory';
-const additionalResponse = require('./clickResponse.json');
+//const additionalResponse = require('./clickResponse.json');
 
+/* This is for displaying the basic and additional information and the legend */
 const tableStyles = (theme) => ({
     root: {
         position: "relative",
@@ -56,9 +53,19 @@ const tableStyles = (theme) => ({
 class TableComponent extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { expanded: false, nodeId: 2, response: this.props.data};
+        this.state = { expanded: false, nodeId: "My Plan", response: this.props.data, additionalInfo: {}};
         this.handleChange = this.handleChange.bind(this);
+    }
 
+    componentDidMount() {
+        this.setState({nodeId: this.props.nodeId});
+        //getAdditionalInfo(this.state.nodeId).then((reply)=> this.setState({additionalInfo: reply}));
+    }
+
+    componentDidUpdate(prev) {
+        if(this.props.nodeId != prev.nodeId) {
+            getAdditionalInfo(this.props.nodeId).then((reply)=> this.setState({additionalInfo: reply}));
+        }
     }
 
     handleChange(panel, e) {
@@ -82,7 +89,11 @@ class TableComponent extends React.Component {
         //const { users } = this.state;
         const displayData = this.createData();
         //const additionalData = this.createAdditionalData(additionalResponse.opencorporates)
+        //if(this.props.nodeId != "My Plan")
+          //  var temp = getAdditionalInfo(this.props.nodeId).then((reply)=> this.setState({additionalInfo: reply}));
         const classes = tableStyles();
+        let additionalResponse = this.state.additionalInfo;
+        debugger;
         return (
             <div style={classes.root}>
                 <h4>{this.props.nodeId}</h4>
@@ -114,7 +125,8 @@ class TableComponent extends React.Component {
                         </AccordionDetails>
                     </Accordion>) : ''
                 }
-                <Accordion style={classes.accord} expanded={this.state.expanded === 'panel2'} value='panel2' onChange={(e) => this.handleChange("panel2", e)}>
+                {(this.state.additionalInfo && Object.keys(this.state.additionalInfo).length != 0 && (this.state.additionalInfo.opencorporates != null)) ? 
+                (<Accordion style={classes.accord} expanded={this.state.expanded === 'panel2'} value='panel2' onChange={(e) => this.handleChange("panel2", e)}>
                     <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls="panel2bh-content" id="panel2bh-header" >
                         <Typography className={classes.heading}>Additional Information</Typography>
                     </AccordionSummary>
@@ -123,48 +135,49 @@ class TableComponent extends React.Component {
                         <table style={classes.table}>
                             <tr>
                                 <td style = {classes.rowKey}>Agent Name</td>
-                                <td style = {classes.rowValue} align="right">{additionalResponse.opencorporates.agent_name || '-'}</td>
+                                <td style = {classes.rowValue} align="right">{this.state.additionalInfo['opencorporates']['agent_name'] || '-'}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>Retrieved At</td>
-                                <td style = {classes.rowValue} align="right">{additionalResponse.opencorporates.retrieved_at || '-'}</td>
+                                <td style = {classes.rowValue} align="right">{this.state.additionalInfo.opencorporates.retrieved_at || '-'}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>Updated At</td>
-                                <td style = {classes.rowValue} align="right">{additionalResponse.opencorporates.updated_at || '-'}</td>
+                                <td style = {classes.rowValue} align="right">{this.state.additionalInfo.opencorporates.updated_at || '-'}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>Incorporation Date</td>
-                                <td style = {classes.rowValue} align="right">{additionalResponse.opencorporates.incorporation_date || '-'}</td>
+                                <td style = {classes.rowValue} align="right">{this.state.additionalInfo.opencorporates.incorporation_date || '-'}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>Jurisdiction Code</td>
-                                <td style = {classes.rowValue} align="right">{additionalResponse.opencorporates.jurisdiction_code || '-'}</td>
+                                <td style = {classes.rowValue} align="right">{this.state.additionalInfo.opencorporates.jurisdiction_code || '-'}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>Company Type</td>
-                                <td style = {classes.rowValue} align="right">{additionalResponse.opencorporates.company_type || '-'}</td>
+                                <td style = {classes.rowValue} align="right">{this.state.additionalInfo.opencorporates.company_type || '-'}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>Agent Address</td>
-                                <td style = {classes.rowValue} align="right">{additionalResponse.opencorporates.agent_address || '-'}</td>
+                                <td style = {classes.rowValue} align="right">{this.state.additionalInfo.opencorporates.agent_address || '-'}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>Current Status</td>
-                                <td style = {classes.rowValue} align="right">{additionalResponse.opencorporates.current_status || '-'}</td>
+                                <td style = {classes.rowValue} align="right">{this.state.additionalInfo.opencorporates.current_status || '-'}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>Company Number</td>
-                                <td style = {classes.rowValue} align="right">{additionalResponse.opencorporates.company_number || '-'}</td>
+                                <td style = {classes.rowValue} align="right">{this.state.additionalInfo.opencorporates.company_number || '-'}</td>
                             </tr>
                             <tr>
                                 <td style = {classes.rowKey}>Registry Url</td>
-                                <td style = {classes.rowValue} align="right">{additionalResponse.opencorporates.registry_url || '-'}</td>
+                                <td style = {classes.rowValue} align="right">{this.state.additionalInfo.opencorporates.registry_url || '-'}</td>
                             </tr>
                         </table>
 
                     </AccordionDetails>
-                </Accordion>
+                </Accordion>) : ''
+                }   
                 <h4>Legend</h4>
                     <VictoryLegend
                         height="750"

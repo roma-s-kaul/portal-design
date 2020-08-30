@@ -7,13 +7,13 @@ import AcUnitIcon from '@material-ui/icons/AcUnit';
 import StorageIcon from '@material-ui/icons/Storage';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
-import * as d3 from 'd3';
 import './GraphComponent.css';
-import getData from './api.js';
-import {VictoryLegend, VictoryContainer} from 'victory';
+import getData  from './api';
 
-//const response = require('./response.json');
+/* This file contains code to control the graph and re-render the table component */
 
+
+//This is to set the css properties
 const temp = {
     root: {
         display: "flex",
@@ -70,6 +70,7 @@ class GraphComponent extends Component {
             businessPlan: this.props.businessPlan,
             view: "graph",
             nodeId: "My Plan",
+            //This is the configuration passed to the d3 component
             myConfig:  {
                 nodeHighlightBehavior: true,
                 maxZoom: 1,
@@ -98,16 +99,15 @@ class GraphComponent extends Component {
                 d3: {
                     gravity: -1000,
                     disableLinkForce: true,
-                    //linkLength: 3000,
                 }
             }
         };
         
         this.onClickNode = this.onClickNode.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        //this.renderGraph = this.renderGraph.bind(this);
     }
 
+    // This is to get the height and width of the svg to make it responsive with the screen height and width
     componentDidMount() {
         var myConfig = {...this.state.myConfig};
         myConfig.width = this.graphRef.current.clientWidth;
@@ -115,15 +115,9 @@ class GraphComponent extends Component {
 
         this.setState({myConfig});
         getData(this.state.businessPlan).then((reply)=> this.setState({response: reply}));
-        /*force.on('tick', () => {
-            this.forceUpdate()
-            });*/
-        //var myurl="http://ckg03.isi.edu:8050/getneighborfrombusinessplan?businessplan="
-       
-        
-        
     }
     
+    // This is to get the coordinates of each of the nodes. It can be extended to include dynamic node setting as well.
     transformData() {
         var nodeObj = [];
         var linkObj = [];
@@ -162,8 +156,6 @@ class GraphComponent extends Component {
             }
             
             counter += 1
-            
-            
 
             var tempObj = {
                 id: com,
@@ -179,6 +171,7 @@ class GraphComponent extends Component {
             nodeObj.push(tempObj);
         });
         
+        /* This is to filter out the in-between edges. */
         var minSim = 1
         Object.keys(this.state.response.result.similarity).forEach(key => {
             if(this.state.response.result.similarity[key].start == 'My Plan' && minSim > (this.state.response.result.similarity[key].sim))

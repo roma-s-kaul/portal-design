@@ -12,6 +12,9 @@ import EditTwoToneIcon from '@material-ui/icons/EditTwoTone';
 import IconButton from '@material-ui/core/IconButton';
 import GraphComponent from './GraphComponent';
 
+/* decide whether to display the Landing page or the result page */
+
+/* Enter the business idea page */
 const LandingComponent = ({textState, boolState, setTextState, setBoolState, onToggle}) => {
     const classes = useStyles();
     return(
@@ -36,6 +39,7 @@ const LandingComponent = ({textState, boolState, setTextState, setBoolState, onT
     );
 }
 
+/* result component - Market intelligence page */
 const ResultComponent = ({onToggle, plan}) => {
     const classes = useStyles(); 
     return(
@@ -101,6 +105,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+/* Decide which content to display */
 const PageContent = ({graphDimension}) => {
     const [showResultState, setResultState] = useState(true);
     const [textState, setTextState] = useState('');
